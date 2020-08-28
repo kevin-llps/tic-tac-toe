@@ -11,12 +11,11 @@ describe('Square', () => {
     });
 
     test('Given click event on button should call onClick callback', () => {
-        const mockOnClick = jest.fn(i => i);
-        const index = 2;
+        const mockOnClick = jest.fn();
         const wrapper = shallow(
-            <Square value="X" onClick={mockOnClick(index)}></Square>
+            <Square value="X" onClick={mockOnClick}></Square>
         );
+        wrapper.find('button').simulate('click');
         expect(mockOnClick).toHaveBeenCalled();
-        expect(mockOnClick).toHaveBeenCalledWith(index);
     });
 });
