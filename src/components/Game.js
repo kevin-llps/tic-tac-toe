@@ -57,12 +57,8 @@ export default class Game extends React.Component {
     });
   }
 
-  render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = this.calculateWinner(current.squares);
-
-    const moves = history.map((step, move) => {
+  getMoves(history) {
+    return history.map((step, move) => {
       const desc = move ?
         'Revenir au tour n°' + move :
         'Revenir au début de la partie';
@@ -72,14 +68,22 @@ export default class Game extends React.Component {
         </li>
       );
     });
+  }
 
-    let status;
-    if (winner) {
-      status = winner + ' a gagné';
-    }
-    else {
-      status = 'Prochain joueur : ' + (this.state.xIsNext ? 'X' : 'O');
-    }
+  getStatus(winner) {
+    return (winner)? 
+      winner + ' a gagné' :
+      'Prochain joueur : ' + (this.state.xIsNext ? 'X' : 'O');
+  }
+
+  render() {
+    const history = this.state.history;
+    const current = history[this.state.stepNumber];
+    const winner = this.calculateWinner(current.squares);
+
+    const moves = this.getMoves(history);
+
+    const status = this.getStatus(winner);
 
     return (
       <div className="game">
