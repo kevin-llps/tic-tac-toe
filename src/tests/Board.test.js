@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, render } from '../enzyme';
-import Board from '../components/Board'
+import Board from '../components/Board';
 import Square from '../components/Square';
 
 describe('Board', () => {
