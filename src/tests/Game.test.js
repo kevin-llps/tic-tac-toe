@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow, render } from '../enzyme';
+import { mount, render } from '../enzyme';
 import Game from '../components/Game';
-import Board from '../components/Board';
+import Square from '../components/Square';
 
 describe('Game', () => {
     test('Render a Game', () => {
@@ -11,197 +11,153 @@ describe('Game', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
-    test('When construct a Game should init all state properties', () => {
-        const expectedSquares = [null, null, null, null, null, null, null, null, null];
-        const wrapper = shallow(
+    test('Given click event on any Square should fill Square', () => {
+        const wrapper = mount(
             <Game></Game>
         );
-        expect(wrapper.instance().state.history.length).toEqual(1);
-        expect(wrapper.instance().state.history[0].squares).toEqual(expectedSquares);
-        expect(wrapper.instance().state.xIsNext).toEqual(true);
-        expect(wrapper.instance().state.stepNumber).toEqual(0);
+        wrapper.find(Square).at(2).first().simulate('click');
+        expect(wrapper.find(Square).at(2).text()).toEqual('X');
     });
 
-    test('Given click event on Board should call onClick callback', () => {
-        const wrapper = shallow(
+    test('Given 2 click events on Squares should alternate player on each round' , () => {
+        const wrapper = mount(
             <Game></Game>
         );
-        const spyHandleClick = jest.spyOn(Game.prototype, 'handleClick');
-        wrapper.find(Board).first().simulate('click');
-        expect(spyHandleClick).toHaveBeenCalled();
+        wrapper.find(Square).at(0).simulate('click');
+        wrapper.find(Square).at(1).simulate('click');
+        expect(wrapper.find(Square).at(0).text()).toEqual('X');
+        expect(wrapper.find(Square).at(1).text()).toEqual('O');
     });
 
-    test('When handleClick is called should set the player value on the square' , () => {
-        const wrapper = shallow(
+    test('Given click events on same Square should not replace the Square value' , () => {
+        const wrapper = mount(
             <Game></Game>
         );
-        const index = 2;
-        wrapper.instance().handleClick(index);
-        expect(wrapper.instance().state.history[1].squares[index]).toEqual('X');
+        wrapper.find(Square).at(0).simulate('click');
+        expect(wrapper.find(Square).at(0).text()).toEqual('X');
+        wrapper.find(Square).at(0).simulate('click');
+        expect(wrapper.find(Square).at(0).text()).toEqual('X');
     });
 
-    test('When handleClick is called should alternate player on each round' , () => {
-        const wrapper = shallow(
+    test('When click event is triggered while a winner was declared should not replace the Square value' , () => {
+        const wrapper = mount(
             <Game></Game>
         );
-        const indexSquX = 2;
-        const indexSquO = 4;
-        wrapper.instance().handleClick(indexSquX);
-        expect(wrapper.instance().state.history[1].squares[indexSquX]).toEqual('X');
-        wrapper.instance().handleClick(indexSquO);
-        expect(wrapper.instance().state.history[2].squares[indexSquO]).toEqual('O');
-    });
-
-    test('When handleClick is called for a filled square should not replace the square value', () => {
-        const wrapper = shallow(
-            <Game></Game>
-        );
-        wrapper.setState({ 
-            history: [
-                ...wrapper.instance().state.history, 
-                { squares: [null, null, 'X', null, null, null, null, null, null] }
-            ] 
-        });
-        const indexSquX = 2;
-        wrapper.instance().handleClick(indexSquX);
-        expect(wrapper.instance().state.history[1].squares[indexSquX]).toEqual('X');
-        expect(wrapper.instance().state.history.length).toEqual(2);
-    });
-
-    test('When handleClick is called while a winner was declared should not replace the square value', () => {
-        const wrapper = shallow(
-            <Game></Game>
-        );
-        const spyCalculateWinner = jest
-        .spyOn(Game.prototype, 'calculateWinner')
-        .mockImplementation((squares) => { return 'X' });
-        const indexSquX = 2;
-        wrapper.instance().handleClick(indexSquX);
-        expect(spyCalculateWinner).toHaveBeenCalled();
-        expect(wrapper.instance().state.history.length).toEqual(1);
-        spyCalculateWinner.mockRestore();
-    });
-
-    test('When handleClick is called should save play in history', () => {
-        const wrapper = shallow(
-            <Game></Game>
-        );
-        const indexSquX = 2;
-        const indexSquO = 7;
-        wrapper.instance().handleClick(indexSquX);
-        expect(wrapper.instance().state.history[1].squares[indexSquX]).toEqual('X');
-        expect(wrapper.instance().state.history.length).toEqual(2);
-        wrapper.instance().handleClick(indexSquO);
-        expect(wrapper.instance().state.history[2].squares[indexSquO]).toEqual('O');
-        expect(wrapper.instance().state.history.length).toEqual(3);
+        wrapper.find(Square).at(0).simulate('click');
+        wrapper.find(Square).at(1).simulate('click');
+        wrapper.find(Square).at(4).simulate('click');
+        wrapper.find(Square).at(5).simulate('click');
+        wrapper.find(Square).at(8).simulate('click');
+        wrapper.find(Square).at(3).simulate('click');
+        expect(wrapper.find(Square).at(3).text()).toEqual('');
     });
 
     [
-        [null, null, null, null, null, null, null, null, null],
-        ['X', 'O', 'X', 'O', 'X', 'O', 'O', 'X', 'O']
+        [],
+        [0, 1, 4, 8, 6, 2]
     ].forEach(boardSquares => {
-        test(`Given board squares having "${boardSquares}" should return null`, () => {
-            const wrapper = shallow(
+        test(`Given index Squares "${boardSquares}" should not declare a winner`, () => {
+            const wrapper = mount(
                 <Game></Game>
             );
-            expect(wrapper.instance().calculateWinner(boardSquares)).toEqual(null);
-        });
-    });
-
-    [
-        ['X', 'X', 'X', null, null, null, null, null, null],
-        [null, null, null, 'X', 'X', 'X', null, null, null],
-        [null, null, null, null, null, null, 'X', 'X', 'X'],
-        ['X', null, null, 'X', null, null, 'X', null, null],
-        [null, 'X', null, null, 'X', null, null, 'X', null],
-        [null, null, 'X', null, null, 'X', null, null, 'X'],
-        ['X', null, null, null, 'X', null, null, null, 'X'],
-        [null, null, 'X', null, 'X', null, 'X', null, null]
-    ].forEach(boardSquares => {
-        test(`Given board squares "${boardSquares}" should return a winner`, () => {
-            const wrapper = shallow(
-                <Game></Game>
-            );
-            expect(wrapper.instance().calculateWinner(boardSquares)).toEqual('X');
-        });
-    });
-
-    [
-        [{ step: 0 }, { xIsNext: true }],
-        [{ step: 1 }, { xIsNext: false }]
-    ].forEach(params => {
-        test(`Given step "${params[0].step}" to jumpTo function should update state stepNumber to "${params[0].step}" and xIsNext to "${params[1].xIsNext}"`, () => {
-            const wrapper = shallow(
-                <Game></Game>
-            );
-            wrapper.setState({ 
-                history: [
-                    ...wrapper.instance().state.history, 
-                    { squares: [null, null, null, null, null, null, null, null, null] }
-                ] 
+            boardSquares.map(indexSquare => {
+                wrapper.find(Square).at(indexSquare).simulate('click');
             });
-            wrapper.instance().jumpTo(params[0].step);
-            expect(wrapper.instance().state.stepNumber).toEqual(params[0].step);
-            expect(wrapper.instance().state.xIsNext).toEqual(params[1].xIsNext);
+            expect(wrapper.find('div.game-info div').first().text() === "X a gagné").toBeFalsy();
+            expect(wrapper.find('div.game-info div').first().text() === "O a gagné").toBeFalsy();
         });
     });
 
     [
-        [{
-            squares: [null, null, null, null, null, null, null, null, null]
-        }],
-        [{
-            squares: [null, null, null, null, null, null, null, null, null]
-        },
-        {
-            squares: [null, null, null, 'X', null, null, null, null, null]
-        },
-        {
-            squares: [null, null, null, null, null, 'O', null, null, null]
-        }]
-    ].forEach(history => {
-        test(`Given history after ${history.length - 1} played round should return corresponding moves`, () => {
-            const wrapper = shallow(
+        [0, 4, 1, 5, 2],
+        [3, 2, 4, 6, 5],
+        [6, 1, 7, 2, 8],
+        [0, 5, 3, 1, 6],
+        [1, 2, 4, 3, 7],
+        [2, 1, 5, 3, 8],
+        [0, 1, 4, 5, 8],
+        [2, 5, 4, 3, 6]
+    ].forEach(boardSquares => {
+        test(`Given index Squares "${boardSquares}" should declare a winner`, () => {
+            const wrapper = mount(
                 <Game></Game>
             );
-            const moves = wrapper.instance().getMoves(history);
-            expect(moves.length).toEqual(history.length);
+            boardSquares.map(indexSquare => {
+                wrapper.find(Square).at(indexSquare).simulate('click');
+            });
+            expect(wrapper.find('div.game-info div').first().text()).toEqual("X a gagné");
         });
     });
 
-    test('Given click event button to jump to passed round should call jumpTo function', () => {
-        const wrapper = shallow(
+    test('Given click events on Squares should display moves', () => {
+        const wrapper = mount(
             <Game></Game>
         );
-        const spyJumpTo = jest.spyOn(Game.prototype, 'jumpTo');
-        wrapper.find('li button').first().simulate('click');
-        expect(spyJumpTo).toHaveBeenCalled();    
+        expect(wrapper.findWhere(n => n.text() === "Revenir au début de la partie").exists()).toBeTruthy();  
+        expect(wrapper.findWhere(n => n.text() === "Revenir au tour n°1").exists()).toBeFalsy();
+        wrapper.find(Square).at(0).simulate('click');
+        expect(wrapper.findWhere(n => n.text() === "Revenir au début de la partie").exists()).toBeTruthy();    
+        expect(wrapper.findWhere(n => n.text() === "Revenir au tour n°1").exists()).toBeTruthy();  
+        expect(wrapper.findWhere(n => n.text() === "Revenir au tour n°2").exists()).toBeFalsy(); 
+        wrapper.find(Square).at(1).simulate('click');
+        expect(wrapper.findWhere(n => n.text() === "Revenir au début de la partie").exists()).toBeTruthy();    
+        expect(wrapper.findWhere(n => n.text() === "Revenir au tour n°1").exists()).toBeTruthy();  
+        expect(wrapper.findWhere(n => n.text() === "Revenir au tour n°2").exists()).toBeTruthy();    
+        expect(wrapper.findWhere(n => n.text() === "Revenir au tour n°3").exists()).toBeFalsy();
     });
 
-    test('Given null winner should return corresponding status', () => {
-        const wrapper = shallow(
+    test('Given click events on Squares should display the status corresponding to the next player', () => {
+        const wrapper = mount(
             <Game></Game>
         );
-        const expectedStatus = "Prochain joueur : X";
-        expect(wrapper.instance().getStatus(null)).toEqual(expectedStatus);
-    });
-    
-    test('Given X winner should return corresponding status', () => {
-        const wrapper = shallow(
-            <Game></Game>
-        );
-        const expectedStatus = "X a gagné";
-        expect(wrapper.instance().getStatus("X")).toEqual(expectedStatus);
+        expect(wrapper.find('div.game-info div').first().text()).toEqual("Prochain joueur : X");
+        wrapper.find(Square).at(0).simulate('click');
+        expect(wrapper.find('div.game-info div').first().text()).toEqual("Prochain joueur : O");
+        wrapper.find(Square).at(0).simulate('click');
+        expect(wrapper.find('div.game-info div').first().text()).toEqual("Prochain joueur : O");
+        wrapper.find(Square).at(1).simulate('click');
+        expect(wrapper.find('div.game-info div').first().text()).toEqual("Prochain joueur : X");
     });
 
-    test('Given xIsNext state to false should return corresponding status', () => {
-        const wrapper = shallow(
+    test('Given click events on Squares corresponding to a winning combination should display the winner', () => {
+        const wrapper = mount(
             <Game></Game>
         );
-        wrapper.setState({
-            xIsNext: false
-        });
-        const expectedStatus = "Prochain joueur : O";
-        expect(wrapper.instance().getStatus(null)).toEqual(expectedStatus);
+        wrapper.find(Square).at(0).simulate('click');
+        wrapper.find(Square).at(1).simulate('click');
+        wrapper.find(Square).at(4).simulate('click');
+        wrapper.find(Square).at(5).simulate('click');
+        wrapper.find(Square).at(8).simulate('click');
+        expect(wrapper.find('div.game-info div').first().text()).toEqual("X a gagné");
+    });
+
+    test('When player is jumping to previous round, it should reset board with the corresponding state', () => {
+        const wrapper = mount(
+            <Game></Game>
+        );
+        wrapper.find(Square).at(0).simulate('click');
+        wrapper.find(Square).at(1).simulate('click');
+        wrapper.find(Square).at(2).simulate('click');
+        wrapper.find(Square).at(3).simulate('click');
+        wrapper.find('div.game-info>ol>li>button').at(1).simulate('click');
+        expect(wrapper.find(Square).at(0).text()).toEqual('X');
+        expect(wrapper.find(Square).at(1).text()).toEqual('');
+        expect(wrapper.find(Square).at(2).text()).toEqual('');
+        expect(wrapper.find(Square).at(3).text()).toEqual('');
+    });
+
+    test('When player is jumping to the beginning, it should reset board with the corresponding state', () => {
+        const wrapper = mount(
+            <Game></Game>
+        );
+        wrapper.find(Square).at(0).simulate('click');
+        wrapper.find(Square).at(1).simulate('click');
+        wrapper.find(Square).at(2).simulate('click');
+        wrapper.find(Square).at(3).simulate('click');
+        wrapper.find('div.game-info>ol>li>button').at(0).simulate('click');
+        expect(wrapper.find(Square).at(0).text()).toEqual('');
+        expect(wrapper.find(Square).at(1).text()).toEqual('');
+        expect(wrapper.find(Square).at(2).text()).toEqual('');
+        expect(wrapper.find(Square).at(3).text()).toEqual('');
     });
 });
