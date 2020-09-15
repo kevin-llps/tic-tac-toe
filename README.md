@@ -1,68 +1,97 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Tic-Tac-Toe Kata
 
-## Available Scripts
+## Introduction & contexte
 
-In the project directory, you can run:
+Ce kata se base sur le tutoriel "[TicTacToe](https://fr.reactjs.org/tutorial/tutorial.html)" de la communauté React 
+que vous pouvez suivre afin d'appréhender les fondamentaux de React, avant
+d'aborder des sujets qui n'étaient pas présents dans le tutoriel 
+comme les tests unitaires sur nos composants, ainsi que la mise en place des hooks. 
 
-### `yarn start`
+## Prérequis
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Connaître les principales fonctionnalités de l'ES6
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Objectifs
 
-### `yarn test`
+- Apprendre les fondamentaux de React (si ce n'était pas le cas avant)
+- Structurer correctement son application React
+- Tester nos composants React
+- Mettre en place les hooks (et les tests qui vont bien)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Exercices
 
-### `yarn build`
+### Exercice 1: Immersion par la pratique
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Seulement pour ceux qui souhaitent maîtriser les fondamentaux de React,
+réalisez le tutoriel "[TicTacToe](https://fr.reactjs.org/tutorial/tutorial.html)".
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Il y a tout ce qu'il vous faut dans la branche `master` pour commencer le tutoriel.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<details>
+    <summary>Solution</summary>
 
-### `yarn eject`
+    https://github.com/KLlopis/tic-tac-toe/tree/solution
+</details>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Exercice 2: Structurer son application React
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Vous remarquerez que dans la solution du tutoriel, 
+tous les composants React sont dans `index.js`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+C'est une mauvaise pratique, il est recommandé d'encapsuler chaque composant
+dans un nouveau fichier js. Bien entendu, chaque composant devra être exporté 
+avec `export`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+De plus, la fonction `calculateWinner` n'est incluse dans aucun 
+composant dans la solution. Or, cette responsabilité revient au 
+composant `Game`.
 
-## Learn More
+Je vous laisse implémenter ces changements.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<details>
+    <summary>Solution</summary>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    https://github.com/KLlopis/tic-tac-toe/tree/reorganized-arbo-solution
+</details>
 
-### Code Splitting
+### Exercice 3: Tester les composants React
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Il manque autre chose à la solution du tutoriel : les tests unitaires !!
 
-### Analyzing the Bundle Size
+Vous utiliserez [Jest](https://jestjs.io/docs/en/getting-started) et [Enzyme](https://enzymejs.github.io/enzyme/docs/api/).
+Enzyme est la librairie qui va vous permettre de tester unitairement vos composants.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+<details>
+    <summary>Solution</summary>
 
-### Making a Progressive Web App
+    https://github.com/KLlopis/tic-tac-toe/tree/tested-solution
+</details>
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### Exercice 4: Mise en place des hooks
 
-### Advanced Configuration
+Votre nouvelle mission si vous l'acceptez : 
+Mettre en place les hooks [useState](https://fr.reactjs.org/docs/hooks-state.html) et [useEffect](https://fr.reactjs.org/docs/hooks-effect.html)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Dans un premier temps, remplacez tous les "class components" par des "functional components".
+Pour ce qui est de `Game` qui exploite un state, c'est dans ce cas que vous allez introduire
+le hook `useState` dans ce "stateful functional component".
 
-### Deployment
+Dans un second temps, vos tests développés précédemment ne passeront plus, notamment
+pour le composant `Game` qui utilise maintenant le hook `useState`.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Sachez qu'avec Enzyme et Jest, il n'est pas possible d'appeler les hooks directement 
+dans les tests comme précédemment ou de les mocker.
 
-### `yarn build` fails to minify
+Pour tester le composant `Game`, la solution consiste donc 
+simuler les interactions requises avec le composant et vérifier
+qu'il possède le bon comportement (affichage d'un message, mise à jour d'une donnée).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Vous pouvez vous aider des ressources suivantes :
+- [Testing Function Components With Hooks](https://medium.com/better-programming/react-16-testing-function-components-with-hooks-f63705e2570)
+- [Testing React Hook State Changes](https://dev.to/theactualgivens/testing-react-hook-state-changes-2oga)
+
+<details>
+    <summary>Solution</summary>
+
+    https://github.com/KLlopis/tic-tac-toe/tree/solution-with-hooks
+</details> 
