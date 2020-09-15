@@ -30,7 +30,8 @@ Il y a tout ce qu'il vous faut dans la branche `master` pour commencer le tutori
 <details>
     <summary>Solution</summary>
 
-    https://github.com/KLlopis/tic-tac-toe/tree/solution
+    git checkout solution
+    (ou voir la solution sur Github : https://github.com/KLlopis/tic-tac-toe/tree/solution)
 </details>
 
 ### Exercice 2: Structurer son application React
@@ -51,7 +52,8 @@ Je vous laisse implémenter ces changements.
 <details>
     <summary>Solution</summary>
 
-    https://github.com/KLlopis/tic-tac-toe/tree/reorganized-arbo-solution
+    git checkout reorganized-arbo-solution
+    (ou voir la solution sur Github : https://github.com/KLlopis/tic-tac-toe/tree/reorganized-arbo-solution)
 </details>
 
 ### Exercice 3: Tester les composants React
@@ -64,7 +66,8 @@ Enzyme est la librairie qui va vous permettre de tester unitairement vos composa
 <details>
     <summary>Solution</summary>
 
-    https://github.com/KLlopis/tic-tac-toe/tree/tested-solution
+    git checkout tested-solution
+    (ou voir la solution sur Github : https://github.com/KLlopis/tic-tac-toe/tree/tested-solution)
 </details>
 
 ### Exercice 4: Mise en place des hooks
@@ -83,8 +86,8 @@ Sachez qu'avec Enzyme et Jest, il n'est pas possible d'appeler les hooks directe
 dans les tests comme précédemment ou de les mocker.
 
 Pour tester le composant `Game`, la solution consiste donc 
-simuler les interactions requises avec le composant et vérifier
-qu'il possède le bon comportement (affichage d'un message, mise à jour d'une donnée).
+à simuler les interactions requises (clic, focus, ...) avec le composant et vérifier
+qu'il possède le bon comportement (affichage d'un message, mise à jour d'une donnée, ...).
 
 Vous pouvez vous aider des ressources suivantes :
 - [Testing Function Components With Hooks](https://medium.com/better-programming/react-16-testing-function-components-with-hooks-f63705e2570)
@@ -93,5 +96,6 @@ Vous pouvez vous aider des ressources suivantes :
 <details>
     <summary>Solution</summary>
 
-    https://github.com/KLlopis/tic-tac-toe/tree/solution-with-hooks
+    git checkout solution-with-hooks
+    (ou voir la solution sur Github : https://github.com/KLlopis/tic-tac-toe/tree/solution-with-hooks)
 </details> 
