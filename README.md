@@ -1,5 +1,7 @@
 # Tic-Tac-Toe Kata
 
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
 ## Introduction & contexte
 
 Ce kata se base sur le tutoriel "[TicTacToe](https://fr.reactjs.org/tutorial/tutorial.html)" de la communauté React 
