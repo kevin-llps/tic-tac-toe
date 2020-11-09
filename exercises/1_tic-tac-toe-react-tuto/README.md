@@ -1,4 +1,4 @@
-# Tic-Tac-Toe Kata
+# Enzyme vs React Testing Library - Tutoriel TicTacToe
 
 ## A propos de l'exercice
 

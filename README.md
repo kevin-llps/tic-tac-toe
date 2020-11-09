@@ -1,22 +1,22 @@
-# Tic-Tac-Toe Kata
+# Enzyme vs React Testing Library
 
 ## Introduction & contexte
 
-Ce kata se base sur le tutoriel "[TicTacToe](https://fr.reactjs.org/tutorial/tutorial.html)" de la communauté React 
-que vous pouvez suivre afin d'appréhender les fondamentaux de React, avant
-d'aborder des sujets qui n'étaient pas présents dans le tutoriel 
-comme les tests unitaires sur nos composants, ainsi que la mise en place des hooks. 
+Cette formation se base sur le tutoriel "[TicTacToe](https://fr.reactjs.org/tutorial/tutorial.html)" de la communauté React 
+et vise à tester unitairement les composants du TicTacToe, dans un premier temps avec Enzyme, puis dans un second temps avec React Testing Library
+afin de comprendre leurs avantages/inconvénients. 
+
+Tout d'abord, cela impliquera un refactoring du code afin de respecter l'approche par composant.
 
 ## Prérequis
 
-- Connaître les principales fonctionnalités de l'ES6
+- Connaître les principales fonctionnalités de l'[ES6](https://kentcdodds.com/blog/javascript-to-know-for-react)
 
 ## Objectifs
 
-- Apprendre les fondamentaux de React (si ce n'était pas le cas avant)
 - Structurer correctement son application React
-- Tester nos composants React
-- Mettre en place les hooks (et les tests qui vont bien)
+- Tester nos composants React avec Enzyme, puis React Testing Library
+- Comprendre les avantages/inconvénients des deux approches
 
 ## A propos des exercices
 

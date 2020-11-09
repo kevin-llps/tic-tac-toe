@@ -1,4 +1,4 @@
-# Tic-Tac-Toe Kata
+# Enzyme vs React Testing Library - React Components testing
 
 ## A propos de l'exercice
 

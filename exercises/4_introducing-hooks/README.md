@@ -1,4 +1,4 @@
-# Tic-Tac-Toe Kata
+# Enzyme vs React Testing Library - Introducing hooks
 
 ## A propos de l'exercice
 
@@ -19,6 +19,8 @@ Pour tester le composant `Game`, la solution consiste donc
 à simuler les interactions requises (clic, focus, ...) avec le composant et vérifier
 qu'il possède le bon comportement (affichage d'un message, mise à jour d'une donnée, ...).
 
-Vous pouvez vous aider des ressources suivantes :
-- [Testing Function Components With Hooks](https://medium.com/better-programming/react-16-testing-function-components-with-hooks-f63705e2570)
-- [Testing React Hook State Changes](https://dev.to/theactualgivens/testing-react-hook-state-changes-2oga)
+## Ressources
+
+[Testing Function Components With Hooks](https://medium.com/better-programming/react-16-testing-function-components-with-hooks-f63705e2570)
+
+[Testing React Hook State Changes](https://dev.to/theactualgivens/testing-react-hook-state-changes-2oga)

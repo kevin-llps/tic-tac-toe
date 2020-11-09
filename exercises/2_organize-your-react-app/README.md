@@ -1,4 +1,4 @@
-# Tic-Tac-Toe Kata
+# Enzyme vs React Testing Library - Organize your React app
 
 ## A propos de l'exercice
 
