@@ -1,5 +1,7 @@
 import React from 'react';
 import Board from './Board';
+import Status from './Status';
+import Moves from './Moves';
 
 export default class Game extends React.Component {
   constructor(props) {
@@ -57,33 +59,11 @@ export default class Game extends React.Component {
     });
   }
 
-  getMoves(history) {
-    return history.map((step, move) => {
-      const desc = move ?
-        'Revenir au tour n°' + move :
-        'Revenir au début de la partie';
-      return (
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
-        </li>
-      );
-    });
-  }
-
-  getStatus(winner) {
-    return (winner)? 
-      winner + ' a gagné' :
-      'Prochain joueur : ' + (this.state.xIsNext ? 'X' : 'O');
-  }
-
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = this.calculateWinner(current.squares);
-
-    const moves = this.getMoves(history);
-
-    const status = this.getStatus(winner);
+    const nextPlayer = this.state.xIsNext ? 'X' : 'O';
 
     return (
       <div className="game">
@@ -93,8 +73,8 @@ export default class Game extends React.Component {
             onClick={(i) => this.handleClick(i)} />
         </div>
         <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
+          <Status winner={winner} nextPlayer={nextPlayer} />
+          <Moves history={history} jumpTo={this.jumpTo.bind(this)} />
         </div>
       </div>
     );
