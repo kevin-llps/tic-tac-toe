@@ -31,7 +31,7 @@ Il y a tout ce qu'il vous faut dans la branche `master` pour commencer le tutori
     <summary>Solution</summary>
 
     git checkout solution
-    (ou voir la solution sur Github : https://github.com/KLlopis/tic-tac-toe/tree/solution)
+    (ou voir la solution sur Github : https://github.com/kevin-llps/tic-tac-toe/tree/solution)
 </details>
 
 ### Exercice 2: Structurer son application React
@@ -53,7 +53,7 @@ Je vous laisse implémenter ces changements.
     <summary>Solution</summary>
 
     git checkout reorganized-arbo-solution
-    (ou voir la solution sur Github : https://github.com/KLlopis/tic-tac-toe/tree/reorganized-arbo-solution)
+    (ou voir la solution sur Github : https://github.com/kevin-llps/tic-tac-toe/tree/reorganized-arbo-solution)
 </details>
 
 ### Exercice 3: Tester les composants React
@@ -67,7 +67,7 @@ Enzyme est la librairie qui va vous permettre de tester unitairement vos composa
     <summary>Solution</summary>
 
     git checkout tested-solution
-    (ou voir la solution sur Github : https://github.com/KLlopis/tic-tac-toe/tree/tested-solution)
+    (ou voir la solution sur Github : https://github.com/kevin-llps/tic-tac-toe/tree/tested-solution)
 </details>
 
 ### Exercice 4: Mise en place des hooks
@@ -97,5 +97,5 @@ Vous pouvez vous aider des ressources suivantes :
     <summary>Solution</summary>
 
     git checkout solution-with-hooks
-    (ou voir la solution sur Github : https://github.com/KLlopis/tic-tac-toe/tree/solution-with-hooks)
+    (ou voir la solution sur Github : https://github.com/kevin-llps/tic-tac-toe/tree/solution-with-hooks)
 </details> 
